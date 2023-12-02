@@ -1,6 +1,92 @@
-@page "/Snake"
-<h3>Snake</h3>
+@page "/"
+@inject IJSRuntime js
+<style>
+    body {
+        background-color: #333;
+        /* Dark background color for the entire page */
+        color: #fff;
+        /* Text color for the entire page */
+        text-align: center;
+    }
 
-@code {
-    
-}
+    h1 {
+        color: #fff;
+        /* Text color for the heading */
+        margin-top: 10px;
+    }
+</style>
+
+<div class="game-background">
+    <h1>Snake Game</h1>
+
+    <div class="game-info">
+        <div>
+            <span class="current-score">Current Score: @score.CurrentScore</span>
+        </div>
+        <div>
+            <span class="top-scores">Top Score: @score.TopScore</span>
+        </div>
+    </div>
+
+    <div class="game-container" tabindex="0" @onkeydown="ControlSnakeDirection">
+        @{
+            var foodOptions = new string[]
+            {
+                "🍎", "👽", "🐲", "🪸", "🐍", "🐉", "🥝", "🍇", "🍈", "🍉", "🍎", "🥭", "🍍", "🍌",
+                "🍋", "🍊", "🍏", "🍐", "🍑", "🍒", "🍓", "🫐", "🫑", "🌶️", "🌽", "🍆", "🫒", "🍅", "🍄", "🥑", "🥒", "🥬", "🥦",
+                "🥔", "🫛", "🫚", "🌰", "🥕", "🧅", "🧄", "🥜", "🫘", "💐", "🌸", "🏵️", "🌹", "🥀", "🪻", "🌷", "🌼", "🌻", "🌺",
+                "☘️", "🌱", "🪴", "🌲", "🌳", "🌴", "🍂", "🍁", "🍀", "🌿", "🌾", "🌵", "🪺", "🪹", "🍃"
+            };
+
+            var random = new Random();
+        }
+
+        @for (int row = 0; row < 20; row++)
+
+        {
+            @for (int col = 0; col < 20; col++)
+
+            {
+                bool isSnakeCell = IsSnakeCell(row, col);
+
+                bool isSnakeHead = IsSnakeHead(row, col);
+
+                bool isFoodCell = IsFoodCell(row, col);
+
+
+                <div class="cell @(isSnakeCell && !isSnakeHead ? "snake-body" : "")">
+                    @if (isSnakeCell)
+
+                    {
+                        @if (isSnakeHead)
+
+                        {
+                            <span>🐲</span>
+                        }
+
+                        else
+
+                        {
+                            <span>🦖</span>
+                        }
+                    }
+                    @if (isFoodCell)
+
+                    {
+                        @* <span>🍎🌺👽🐲🪸🐍🐉🥝🍇🍈🍉🍎🥭🍍🍌🍋🍊🍏🍐🍑🍒🍓🫐🫑🌶️🌽🍆🫒🍅🍄🥑🥒🥬🥦🥔🫛🫚🌰🥕🧅🧄🥜🫘💐🌸🏵️🌹🥀🪻🌷🌼☘️🌱🪴🌲🌳🌴🍂🍁🍀🌿🌾🌵🪺🪹🍃</span> *@
+                        @* <span>@foodOptions[random.Next(foodOptions.Length)]</span> *@
+                        <span>🌻</span>
+                    }
+                </div>
+            }
+        }
+    </div>
+
+    <div class="footer">
+        Designed and Developed by, <span class="highlighted-name">DrickIT</span>
+        <br/>
+        @* <span class="design-sucks">Design Sucks, still check out my website?</span> *@
+        <a href="https://blog.ithuo.net/" target="_blank" class="website-link">Visit My Website ⬤</a>
+    </div>
+
+</div>

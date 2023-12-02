@@ -11,4 +11,8 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\images\GameOver.gif" />
+    </ItemGroup>
+
 </Project>
