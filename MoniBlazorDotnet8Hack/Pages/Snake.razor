@@ -2,7 +2,7 @@
 @inject IJSRuntime js
 <style>
     body {
-        background-color: #333;
+        background-color: #f3d7c3;
         /* Dark background color for the entire page */
         color: #fff;
         /* Text color for the entire page */
@@ -15,10 +15,13 @@
         margin-top: 10px;
     }
 </style>
-
+@{
+    @* bool gameStarted = false; *@
+    
+}
 <div class="game-background">
-    <h1>Snake Game</h1>
-
+    <h1>🐧贪吃蛇游戏☃️     </h1>
+ 
     <div class="game-info">
         <div>
             <span class="current-score">Current Score: @score.CurrentScore</span>
@@ -27,25 +30,26 @@
             <span class="top-scores">Top Score: @score.TopScore</span>
         </div>
     </div>
-
+    
+    <button @onclick="ToggleGameStart">@(@gameStarted ? "🔅🏳️‍🌈🏳️‍⚧️💫〽️Pause Game☁️☀️🌟🌈" : "☁️☀️🌟🌈Start Game🔅🏳️‍🌈🏳️‍⚧️💫〽️")</button>
     <div class="game-container" tabindex="0" @onkeydown="ControlSnakeDirection">
         @{
+
             var foodOptions = new string[]
             {
-                "🍎", "👽", "🐲", "🪸", "🐍", "🐉", "🥝", "🍇", "🍈", "🍉", "🍎", "🥭", "🍍", "🍌",
+                @* "🍎", "👽", "🐲", "🪸", "🐍", "🐉", "🥝", "🍇", "🍈", "🍉", "🍎", "🥭", "🍍", "🍌",
                 "🍋", "🍊", "🍏", "🍐", "🍑", "🍒", "🍓", "🫐", "🫑", "🌶️", "🌽", "🍆", "🫒", "🍅", "🍄", "🥑", "🥒", "🥬", "🥦",
                 "🥔", "🫛", "🫚", "🌰", "🥕", "🧅", "🧄", "🥜", "🫘", "💐", "🌸", "🏵️", "🌹", "🥀", "🪻", "🌷", "🌼", "🌻", "🌺",
-                "☘️", "🌱", "🪴", "🌲", "🌳", "🌴", "🍂", "🍁", "🍀", "🌿", "🌾", "🌵", "🪺", "🪹", "🍃"
+                "☘️", "🌱", "🪴", "🌲", "🌳", "🌴", "🍂", "🍁", "🍀", "🌿", "🌾", "🌵", "🪺", "🪹", "🍃" *@
+                "🔅","🏳️‍🌈","🏳️‍⚧️","💫","〽️","☁️","☀️","🌟","🌈"
             };
 
             var random = new Random();
         }
-
+        
         @for (int row = 0; row < 20; row++)
-
         {
             @for (int col = 0; col < 20; col++)
-
             {
                 bool isSnakeCell = IsSnakeCell(row, col);
 
@@ -61,21 +65,20 @@
                         @if (isSnakeHead)
 
                         {
-                            <span>🐲</span>
+                            <span>☃️</span>
                         }
 
                         else
 
                         {
-                            <span>🦖</span>
+                            <span>🐧</span>
                         }
                     }
                     @if (isFoodCell)
-
                     {
-                        @* <span>🍎🌺👽🐲🪸🐍🐉🥝🍇🍈🍉🍎🥭🍍🍌🍋🍊🍏🍐🍑🍒🍓🫐🫑🌶️🌽🍆🫒🍅🍄🥑🥒🥬🥦🥔🫛🫚🌰🥕🧅🧄🥜🫘💐🌸🏵️🌹🥀🪻🌷🌼☘️🌱🪴🌲🌳🌴🍂🍁🍀🌿🌾🌵🪺🪹🍃</span> *@
-                        @* <span>@foodOptions[random.Next(foodOptions.Length)]</span> *@
-                        <span>🌻</span>
+                        @* <span>🍎🌺👽🦖🐲🪸🐍🐉🥝🍇🍈🍉🍎🥭🍍🍌🍋🍊🍏🍐🍑🍒🍓🫐🫑🌶️🌽🍆🫒🍅🍄🥑🥒🥬🥦🥔🫛🫚🌰🥕🧅🧄🥜🫘💐🌸🏵️🌹🥀🪻🌷🌼☘️🌱🪴🌲🌳🌴🍂🍁🍀🌿🌾🌵🪺🪹🍃</span> *@
+                        <span>@foodOptions[random.Next(foodOptions.Length)]</span>
+                        @* <span>🌻</span> *@
                     }
                 </div>
             }

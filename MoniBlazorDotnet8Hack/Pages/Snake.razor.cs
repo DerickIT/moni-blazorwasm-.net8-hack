@@ -30,6 +30,7 @@ public partial class Snake
 
     bool isGameOver;
 
+    private bool gameStarted = false;
     #endregion
 
     #region [METHODS]
@@ -37,6 +38,7 @@ public partial class Snake
     protected override async Task OnInitializedAsync()
     {
         InitializeGame();
+        // if (gameStarted)
         await StartGame();
     }
 
@@ -57,6 +59,12 @@ public partial class Snake
 
     private async Task StartGame()
     {
+        if (!gameStarted)
+        {
+            return;
+        }
+
+
         // Start the game loop
         while (!isGameOver)
         {
@@ -82,6 +90,10 @@ public partial class Snake
 
     private void ControlSnakeDirection(KeyboardEventArgs e)
     {
+        if (!gameStarted)
+        {
+            return;
+        }
         switch (e.Key)
         {
             case "ArrowUp":
@@ -100,12 +112,21 @@ public partial class Snake
 
                 snakeDirection = Direction.LEFT;
                 break;
+            case "Space":
+                snakeDirection = Direction.SPACE;
+                gameStarted = !gameStarted;
+                break;
+
         }
     }
 
     // Update Snake position based on direction
     private void UpdateSnakeDirection()
     {
+        if (!gameStarted)
+        {
+            return;
+        }
         switch (snakeDirection)
         {
             case Direction.UP:
@@ -119,6 +140,9 @@ public partial class Snake
                 break;
             case Direction.LEFT:
                 currentCell.Col--;
+                break;
+            case Direction.SPACE:
+                gameStarted = !gameStarted;
                 break;
         }
 
@@ -151,7 +175,7 @@ public partial class Snake
         if (currentCell.Row < 0 || currentCell.Row >= 20 || currentCell.Col < 0 || currentCell.Col >= 20)
         {
             isGameOver = true;
-            bool isResetGame = await  js.InvokeAsync<bool>("ResetGamePopup", score.CurrentScore);
+            bool isResetGame = await js.InvokeAsync<bool>("ResetGamePopup", score.CurrentScore);
             if (isResetGame)
             {
                 if (score.CurrentScore > score.TopScore)
@@ -175,6 +199,32 @@ public partial class Snake
         snakeBody.Clear();
         isGameOver = false;
         OnInitializedAsync();
+    }
+    private void ToggleGameStart()
+    {
+        gameStarted = !gameStarted;
+        if (gameStarted)
+        {
+            StartGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
+    private void GameLoop()
+    {
+        if (!gameStarted)
+            return;
+
+
+        StartGame();
+    }
+    // Pause the game
+    private void PauseGame()
+    {
+
     }
 
     #endregion
