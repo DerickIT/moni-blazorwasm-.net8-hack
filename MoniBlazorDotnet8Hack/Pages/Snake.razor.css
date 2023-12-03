@@ -1,6 +1,9 @@
 /* Global dark theme styles */
 
-
+@keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
 /* Styling for the score display container */
 .game-info {
     display: flex;
@@ -18,32 +21,39 @@
 .current-score {
     font-size: 24px;
     margin-bottom: 10px;
+    color: black;
 }
 
 /* Styling for the top scores list */
 .top-scores {
     font-size: 20px;
+    color: black; 
 }
-
+.tips {
+    font-size: 20px;
+    color: black; 
+}
 
 /* Styling for the game container (the grid) */
 .game-container {
     display: grid;
     grid-template-columns: repeat(20, 30px);
     grid-gap: 2px;
-    border: 2px solid #c38da1;
+    border: 2px solid #44475a; /* Dark border color */
     width: 660px;
-    background-color: #b57878;
+    background-color: #282a36; 
     padding: 10px;
     margin: 0 auto;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
-
+.game-over {
+    animation: fadeOut 1s;
+}
 .cell {
     width: 30px;
     height: 30px;
-    background-color:#f1e1cd;
+    background-color:#f8f8f2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +64,8 @@
 }
 
 .snake-body {
-    background-color: #9dcd9d;
+    background-color: #50fa7b;
+    transition: all 0.3s ease-in-out; 
 }
 
 /* Styling for the footer */
@@ -62,11 +73,11 @@
     text-align: center;
     margin-top: 20px;
     font-size: 16px;
-    color: #999; /* Default text color for the footer */
+    color: #f8f8f2; /* Default text color for the footer */
 }
 
 .designed-text {
-    color: #fff; /* Text color for the "Designed and Developed by" text */
+    color: #f8f8f2; /* Text color for the "Designed and Developed by" text */
 }
 
 .name {

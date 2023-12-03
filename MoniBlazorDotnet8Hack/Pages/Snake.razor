@@ -29,9 +29,13 @@
         <div>
             <span class="top-scores">Top Score: @score.TopScore</span>
         </div>
+        <div>
+            <span class="tips"> Use the keyboard space bar, up↑ and down↓ left← and right→ keys to control the direction of the snowman, eat every reward!</span>
+        </div>
     </div>
     
     <button @onclick="ToggleGameStart">@(@gameStarted ? "🔅🏳️‍🌈🏳️‍⚧️💫〽️Pause Game☁️☀️🌟🌈" : "☁️☀️🌟🌈Start Game🔅🏳️‍🌈🏳️‍⚧️💫〽️")</button>
+    
     <div class="game-container" tabindex="0" @onkeydown="ControlSnakeDirection">
         @{
 

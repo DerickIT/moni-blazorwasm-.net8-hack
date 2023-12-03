@@ -43,6 +43,7 @@ public partial class Snake
     bool isGameOver;
 
     private bool gameStarted = false;
+
     #endregion
 
     #region [METHODS]
@@ -116,6 +117,14 @@ public partial class Snake
         foodCol = random.Next(0, 20);
     }
 
+    /// <summary>
+    /// Controls the direction of the snake based on the keyboard input.
+    /// </summary>
+    /// <param name="e">The keyboard event arguments containing the key pressed.</param>
+    /// <remarks>
+    /// The method changes the direction of the snake based on the arrow keys pressed.
+    /// If the space key is pressed, it toggles the game state between started and paused.
+    /// </remarks>
     private void ControlSnakeDirection(KeyboardEventArgs e)
     {
         if (!gameStarted)
@@ -187,6 +196,22 @@ public partial class Snake
         }
     }
 
+    /// <summary>
+    /// Represents a cell in the snake game.
+    /// </summary>
+    public class SnakeCell
+    {
+        /// <summary>
+        /// Gets or sets the row index of the cell.
+        /// </summary>
+        public int Row { get; set; }
+
+        /// <summary>
+        /// Gets or sets the column index of the cell.
+        /// </summary>
+        public int Col { get; set; }
+    }
+
     private SnakeCell CloneSnakeCell()
     {
         return new SnakeCell() { Row = currentCell.Row, Col = currentCell.Col };
@@ -198,6 +223,11 @@ public partial class Snake
         return currentCell.Row == foodRow && currentCell.Col == foodCol;
     }
 
+    /// <summary>
+    /// Checks if the game is over based on the current cell's position.
+    /// If the game is over, it prompts the user to reset the game or navigate to a website.
+    /// </summary>
+    /// <returns>A Task that represents the asynchronous operation.</returns>
     private async Task IsGameOver()
     {
         if (currentCell.Row < 0 || currentCell.Row >= 20 || currentCell.Col < 0 || currentCell.Col >= 20)
@@ -228,12 +258,17 @@ public partial class Snake
         isGameOver = false;
         OnInitializedAsync();
     }
-    private void ToggleGameStart()
+    /// <summary>
+    /// Toggles the game state between started and paused.
+    /// If the game is currently paused, it starts the game.
+    /// If the game is currently running, it pauses the game.
+    /// </summary>
+    private async void ToggleGameStart()
     {
         gameStarted = !gameStarted;
         if (gameStarted)
         {
-            StartGame();
+            await StartGame();
         }
         else
         {
@@ -241,18 +276,18 @@ public partial class Snake
         }
     }
 
-    private void GameLoop()
+    private async void GameLoop()
     {
         if (!gameStarted)
             return;
 
 
-        StartGame();
+        await StartGame();
     }
     // Pause the game
     private void PauseGame()
     {
-
+        gameStarted = false;
     }
 
     #endregion
